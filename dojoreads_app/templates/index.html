@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+    {%load static%}
+    <link rel="stylesheet" href="{% static 'style/style.css' %}">
+</head>
+<body>
+    <div id="wrapper">
+        <div class="header"><h1>Welcome!</h1></div>
+        
+        {% if messages %}
+            <ul class="messages">    
+            {% for message in messages %}    
+                <li>{{ message }}</li>    
+            {% endfor %}
+            </ul>
+        {% endif %}
+        <div class="column">
+            <form action="/register" method="POST">
+                {%csrf_token%}
+                <fieldset>
+                    <legend>Register</legend>                    
+                    <label for="">Name:</label>
+                    <input type="text" name="name" id=""><br>
+                    <label for="">Alias:</label>
+                    <input type="text" name="alias"><br>
+                    <label for="">Email:</label>
+                    <input type="text" name="email"><br>
+                    <label for="">Password:</label>
+                    <input type="password" name="pw"><br>
+                    <label for="">Confirm Password:</label>
+                    <input type="password" name="conf_pw"><br>
+                    <button>Register</button>
+                </fieldset>
+            </form>
+        </div>
+        <div class="column">
+            <form action="/login" method="POST">
+                {%csrf_token%}
+                <fieldset>
+                    <legend>Login</legend>
+                    <label for="">Email:</label>
+                    <input type="text" name="email" id=""><br>
+                    <label for="">Password:</label>
+                    <input type="password" name="pw"><br>
+                    <button>Login</button>
+                </fieldset>                
+            </form>
+        </div>
+    </div>
+</body>
+</html>

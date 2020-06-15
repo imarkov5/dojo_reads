@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Book and Review</title>
+    {%load static%}
+    <link rel="stylesheet" href="{% static 'style/style.css' %}">
+</head>
+<body>
+    <div id="wrapper">
+        <div class="header">
+            <h1>{{user.alias}}</h1>
+            <p><a href="/books">Home</a> | <a href="/books/add">Add Book and Review</a> | <a href="/logout">Logout</a></p>            
+        </div>
+        <div class="main" id="main_user">
+            <h2>User Alias: {{user.alias}}</h2>
+            <h2>Name: {{user.name}}</h2>
+            <p>Email: {{user.email}}</p><br>
+            <p>Total Reviews: {{user.reviews.count}}</p>
+            <h2>Posted Reviews on the following books:</h2>
+            {%for review in user_reviews%}
+            <h3><a href="/books/{{review.book.id}}">{{review.book.title}}</a></h3>
+            {%endfor%}            
+        </div>
+       
+    </div>
+</body>
+</html>

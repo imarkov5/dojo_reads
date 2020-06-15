@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Book and Review</title>
+    {%load static%}
+    <link rel="stylesheet" href="{% static 'style/style.css' %}">
+</head>
+<body>
+    <div id="wrapper">
+        <div class="header">
+            <p><a href="/books">Home</a> | <a href="/logout">Logout</a></p>            
+        </div>
+        <div class="main">
+            <div id="column-1">
+                <h2>{{book.title}}</h2>
+                <h2>Author: {{book.author.author}}</h2>
+                <h3>Reviews:</h3>
+                <div>                    
+                    {%for review in all_reviews%}
+                    <div class="border"><p>Rating: {{review.rating}} stars</p></div>
+                    <p><a href="/users/{{review.poster.id}}">{{review.poster.alias}}</a> says: {{review.review}}</p><br>
+                    <p>Posted on: {{review.created_at|date:"D d M Y"}}</p><br>
+                    {% if review.poster.id == request.session.user_id %}
+                    <a href="/delete/{{review.id}}/{{book.id}}">Delete this Review</a>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            
+            <div id="column-1">
+                {% if messages %}
+                    <ul class="messages">    
+                    {% for message in messages %}    
+                        <li>{{ message }}</li>    
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+                <form action="/add_review" method="POST">
+                    {%csrf_token%}
+                    <label for="">Add a Review:</label><br>
+                    <input type="hidden" name="book_id" value="{{book.id}}">
+                    <textarea name="review" id="" cols="65" rows="10"></textarea><br>
+                    <label for="">Rating:</label>
+                    <select name="rating" id="">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select><br>
+                    <button>Submit Review</button>
+
+                </form>
+            </div>
+            
+        </div>
+    </div>
+</body>
+</html>
